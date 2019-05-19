@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+
+  red:
+    mem_limit: 256m
+    image: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data:/data
+
+  ticket-fe:
+    mem_limit: 256m
+    image: eldorad/ticket-fe
+    ports:
+      - "5000"
+    depends_on:
+      - "beanstalk"
+      - "red"
+
+  ticket-be:
+    mem_limit: 256m
+    image: eldorad/ticket-be
+    depends_on:
+      - "ticket-fe"
+      - "beanstalk"
+      - "red"
+
+  beanstalk:
+    image: schickling/beanstalkd
+    ports:
+      - "11300"
+
+  haproxy:
+    mem_limit: 256m
+    image: eeacms/haproxy
+    depends_on:
+    - ticket-fe
+    ports:
+    - "80:5000"
+    - "1936:1936"
+    environment:
+      BACKENDS: "ticket-fe"
+      DNS_ENABLED: "true"
+      LOG_LEVEL: "info"
+      BACKENDS_PORT: 5000

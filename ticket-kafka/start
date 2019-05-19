@@ -1,0 +1,2 @@
+docker-compose --file local-compose.yml up --scale ticket-be=3 --scale ticket-fe=2
+#docker-compose --file local-compose.yml up

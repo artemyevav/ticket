@@ -1,0 +1,1 @@
+docker build -t eldorad/ticket-fe ticket-fe
