@@ -3,14 +3,14 @@ version: '2'
 services:
 
   red:
-    mem_limit: 256m
+    mem_limit: 128m
     image: redis
     command: redis-server --appendonly yes
     volumes:
       - ./data:/data
 
   ticket-fe:
-    mem_limit: 256m
+    mem_limit: 128m
     image: eldorad/ticket-fe
     ports:
       - "5000"
@@ -19,7 +19,7 @@ services:
       - "red"
 
   ticket-be:
-    mem_limit: 256m
+    mem_limit: 128m
     image: eldorad/ticket-be
     depends_on:
       - "ticket-fe"
@@ -27,12 +27,13 @@ services:
       - "red"
 
   beanstalk:
+    mem_limit: 128m
     image: schickling/beanstalkd
     ports:
       - "11300"
 
   haproxy:
-    mem_limit: 256m
+    mem_limit: 128m
     image: eeacms/haproxy
     depends_on:
     - ticket-fe
