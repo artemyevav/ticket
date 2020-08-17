@@ -22,9 +22,9 @@ def index():
 	    else:
 		return "FE: Found: (%s,%s)" % (t,ans)
 	else:
-	    print >> sys.stderr, "FE is sending '%s' to kafka" % t
+	    print >> sys.stderr, "FE is sending '%s' to beanstalk" % t
 	    if bt: bt.put(str(t))
-	    return "Sent %s" % t
+	    return "Sent %s, refresh the page after a while" % t
     return render_template('index.tpl')
 
 
