@@ -1,4 +1,4 @@
 flask==1.0
 redis==3.2.1
 beanstalkc==0.4.0
-PyYAML==5.1
+PyYAML==5.4
